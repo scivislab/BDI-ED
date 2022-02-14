@@ -124,49 +124,6 @@ def getMergeTree_withVTK(path,simplificationThreshold,fieldName,treeType):
     
     return nodeScalars,nodeTypes,nodePositions,upIDs,downIDs,regionSizes,persistences,mt,ftm.GetOutput(2)
 
-def getAllMatchings(l1,l2):
-    if(len(l1)==0 and len(l2)==0):
-        return set([(frozenset([]),frozenset([]),frozenset([]))])
-    else:
-        m = set()
-        for e1 in l1:
-            for e2 in l2:
-                l1_ = l1.copy()
-                l2_ = l2.copy()
-                l1_.remove(e1)
-                l2_.remove(e2)
-                m_ = getAllMatchings(l1_,l2_)
-                m__ = []
-                for x in m_:
-                    x_ = list(x[1])
-                    x_.append((e1,e2))
-                    x__ = frozenset(x_)
-                    m__.append((x[0],x__,x[2]))
-                m = m.union(set(m__))
-        for e1 in l1:
-            l1_ = l1.copy()
-            l1_.remove(e1)
-            m_ = getAllMatchings(l1_,l2)
-            m__ = []
-            for x in m_:
-                x_ = list(x[0])
-                x_.append((e1))
-                x__ = frozenset(x_)
-                m__.append((x__,x[1],x[2]))
-            m = m.union(set(m__))
-        for e2 in l2:
-            l2_ = l2.copy()
-            l2_.remove(e2)
-            m_ = getAllMatchings(l1,l2_)
-            m__ = []
-            for x in m_:
-                x_ = list(x[2])
-                x_.append((e2))
-                x__ = frozenset(x_)
-                m__.append((x[0],x[1],x__))
-            m = m.union(set(m__))
-        return m
-
 def getBranchDecomposition(topo,nodeScalars,rootIdx):
     nodeBranches = list(range(len(nodeScalars)))
     branchLabels = dict()

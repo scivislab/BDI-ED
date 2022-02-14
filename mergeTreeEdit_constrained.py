@@ -1,5 +1,6 @@
 import numpy as np
 import math
+from scipy.optimize import linear_sum_assignment
 
 from contourMergeTrees_helpers import *
             
@@ -71,20 +72,30 @@ def editDistance_constrained(nodes1,topo1,rootID1,nodes2,topo2,rootID2,editCost,
             return memF[(curr1,curr2)]
         # If both forests not empty, find optimal edit operations
         if((curr1,curr2) not in memF):
+            if(len(topo1[curr1])==0):
+                return editDistance_constrained_forest(-1,curr2)
+            if(len(topo2[curr2])==0):
+                return editDistance_constrained_forest(curr1,-1)
             d = float("inf")
-            childMatchings = getAllMatchings(topo1[curr1],topo2[curr2])
             # Cases for mapping some trees in first forest to some trees in second forest and deleting all other trees in both forests
-            for m in childMatchings:
-                d_ = 0
-                # trees not mapped in first forest
-                for child1 in m[0]:
-                    d_ += editDistance_constrained_tree(child1,-1)
-                # trees not mapped in second forest
-                for child2 in m[2]:
-                    d_ += editDistance_constrained_tree(-1,child2)
-                # trees mapped
-                for child1,child2 in m[1]:
-                    d_ += editDistance_constrained_tree(child1,child2)
+            # Special case of binary trees is treated differently for performance
+            if(False):#len(topo1[curr1])<=2 and len(topo2[curr2])<=2):
+                n11 = topo1[curr1][0]
+                n12 = topo1[curr1][1] if len(topo1[curr1]) > 1 else -1
+                n21 = topo2[curr2][0]
+                n22 = topo2[curr2][1] if len(topo2[curr2]) > 1 else -1
+                d = min(d,editDistance_constrained_tree(n11,n21)+editDistance_constrained_tree(n12,n22))
+                d = min(d,editDistance_constrained_tree(n11,n22)+editDistance_constrained_tree(n12,n21))
+            else:
+                deg = max(len(topo1[curr1]),len(topo2[curr2]))
+                matchMatrix = np.zeros((deg,deg))
+                for i in range(deg):
+                    child1 = topo1[curr1][i] if i<len(topo1[curr1]) else -1
+                    for j in range(deg):
+                        child2 = topo2[curr2][j] if j<len(topo2[curr2]) else -1
+                        matchMatrix[i,j] = editDistance_constrained_tree(child1,child2)
+                row_ind, col_ind = linear_sum_assignment(matchMatrix)
+                d_ = matchMatrix[row_ind, col_ind].sum()
                 d = min(d,d_)
             # Cases for mapping one subtree in first forest to second forest and deleting all other trees in first forest 
             for child1 in topo1[curr1]:
@@ -162,20 +173,37 @@ def editDistance_constrained(nodes1,topo1,rootID1,nodes2,topo2,rootID2,editCost,
             for child1 in topo1[curr1]:
                 match += editDistance_constrained_tree_traceback(child1,curr2)
             return match
-        childMatchings = getAllMatchings(topo1[curr1],topo2[curr2])
-        for m in childMatchings:
-            d_ = 0
-            match = []
-            for child1 in m[0]:
-                d_ += editDistance_constrained_tree(child1,-1)
-                match += editDistance_constrained_tree_traceback(child1,-1)
-            for child2 in m[2]:
-                d_ += editDistance_constrained_tree(-1,child2)
-                match += editDistance_constrained_tree_traceback(-1,child2)
-            for child1,child2 in m[1]:
-                d_ += editDistance_constrained_tree(child1,child2)
-                match += editDistance_constrained_tree_traceback(child1,child2)
+        if(len(topo1[curr1])==0):
+            return editDistance_constrained_forest_traceback(-1,curr2)
+        if(len(topo2[curr2])==0):
+            return editDistance_constrained_forest_traceback(curr1,-1)
+        if(False):#)len(topo1[curr1])<=2 and len(topo2[curr2])<=2):
+            n11 = topo1[curr1][0]
+            n12 = topo1[curr1][1] if len(topo1[curr1]) > 1 else -1
+            n21 = topo2[curr2][0]
+            n22 = topo2[curr2][1] if len(topo2[curr2]) > 1 else -1
+            d_ = editDistance_constrained_tree(n11,n21)+editDistance_constrained_tree(n12,n22)
             if(memF[(curr1,curr2)] == d_):
+                return editDistance_constrained_tree_traceback(n11,n21)+editDistance_constrained_tree_traceback(n12,n22)
+            d_ = editDistance_constrained_tree(n11,n22)+editDistance_constrained_tree(n12,n21)
+            if(memF[(curr1,curr2)] == d_):
+                return editDistance_constrained_tree_traceback(n11,n22)+editDistance_constrained_tree_traceback(n12,n21)
+        else:
+            deg = max(len(topo1[curr1]),len(topo2[curr2]))
+            matchMatrix = np.zeros((deg,deg))
+            for i in range(deg):
+                child1 = topo1[curr1][i] if i<len(topo1[curr1]) else -1
+                for j in range(deg):
+                    child2 = topo2[curr2][j] if j<len(topo2[curr2]) else -1
+                    matchMatrix[i,j] = editDistance_constrained_tree(child1,child2)
+            row_ind, col_ind = linear_sum_assignment(matchMatrix)
+            d_ = matchMatrix[row_ind, col_ind].sum()
+            if(memF[(curr1,curr2)] == d_):
+                match = []
+                for i in range(len(row_ind)):
+                    child1 = topo1[curr1][row_ind[i]] if row_ind[i]<len(topo1[curr1]) else -1
+                    child2 = topo2[curr2][col_ind[i]] if col_ind[i]<len(topo2[curr2]) else -1
+                    match += editDistance_constrained_tree_traceback(child1,child2)
                 return match
         for child1 in topo1[curr1]:
             if(len(topo1[child1])==0):
