@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<VTKFile type="vtkMultiBlockDataSet" version="1.0" byte_order="LittleEndian" header_type="UInt32" compressor="vtkZLibDataCompressor">
+  <vtkMultiBlockDataSet>
+    <DataSet index="0" file="test_MB/test_MB_0.vti"/>
+    <DataSet index="1" file="test_MB/test_MB_1.vti"/>
+    <DataSet index="2" file="test_MB/test_MB_2.vti"/>
+    <DataSet index="3" file="test_MB/test_MB_3.vti"/>
+    <DataSet index="4" file="test_MB/test_MB_4.vti"/>
+    <DataSet index="5" file="test_MB/test_MB_5.vti"/>
+    <DataSet index="6" file="test_MB/test_MB_6.vti"/>
+    <DataSet index="7" file="test_MB/test_MB_7.vti"/>
+    <DataSet index="8" file="test_MB/test_MB_8.vti"/>
+    <DataSet index="9" file="test_MB/test_MB_9.vti"/>
+    <DataSet index="10" file="test_MB/test_MB_10.vti"/>
+    <DataSet index="11" file="test_MB/test_MB_11.vti"/>
+    <DataSet index="12" file="test_MB/test_MB_12.vti"/>
+    <DataSet index="13" file="test_MB/test_MB_13.vti"/>
+    <DataSet index="14" file="test_MB/test_MB_14.vti"/>
+    <DataSet index="15" file="test_MB/test_MB_15.vti"/>
+    <DataSet index="16" file="test_MB/test_MB_16.vti"/>
+    <DataSet index="17" file="test_MB/test_MB_17.vti"/>
+    <DataSet index="18" file="test_MB/test_MB_18.vti"/>
+    <DataSet index="19" file="test_MB/test_MB_19.vti"/>
+  </vtkMultiBlockDataSet>
+</VTKFile>

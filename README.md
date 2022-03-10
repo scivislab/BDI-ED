@@ -40,7 +40,13 @@ The examples work as follows:
 
 - By running `python3 distanceMatrixComparison_outlier.py` or `python3 distanceMatrixComparison_outlier2.py`, we get three distance matrices for a synthetic example dataset (`test_datasets/branchVSconstrained_outlier/` or `test_datasets/branchVSconstrained_outlier2/`): one is computed with the branch mapping distance, one with the constrained edit distance and one is a precomputed distance matrix using the TTKMergeTreeDistanceMatrix module. They are rendered as a simple heatmap as well as a clustermap using SciPy.
 
-- By running `python3 dtimeTrack_heatedCylinder2D_branch.py`, we get a vtk multiblock with feature tracking information attached on the heated cylinder dataset (`heatedCylinder2d.cdb/`). The vtk file is written to `output/`.
+- By running `python3 timeTrack_heatedCylinder2D_branch.py`, we get a vtk multiblock with feature tracking information attached on the heated cylinder dataset (`heatedCylinder2d.cdb/`). The vtk file is written to `output/`.
+
+## Datasets and C++ version
+
+The four datasets corresponding to the python examples can be found in the directories `heatedCylinder2d.cdb`, `test_datasets/branchVSconstrained_cluster`, `test_datasets/branchVSconstrained_outlier` and `test_datasets/branchVSconstrained_outlier2`. We also provide two noisy versions of the outlier ensemble: one in `test_datasets/branchVSconstrained_outlier2` and `test_datasets/branchVSconstrained_outlier_noisy`. All datasets are provided in VTK file formats. The two noisy datasets have no corresponding python examples, as computation times would be too high. The should only be used with the C++ version of the library (see below for details).
+
+We also provide a more efficient C++ implementation of the two distance functions in the `cpp/` directory. The interface is similar to the python version. The C++ implementation does not yet output the matching, but only the distance, and does not allow for a base metric change. The Wasserstein base metric has been hardcoded for both distances.
 
 ## Dependencies
 
