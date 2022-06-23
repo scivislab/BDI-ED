@@ -10,7 +10,7 @@ find_package(TTKBase REQUIRED)
 add_executable(TreeEditDistance ted.cxx)
 
 # add the library
-add_library(mted editDistance_constrained.cxx editDistance_branch.cxx)
+add_library(mted editDistance_constrained.cxx editDistance_branch.cxx editDistance_path.cxx)
 
 target_link_libraries(TreeEditDistance
   PUBLIC
