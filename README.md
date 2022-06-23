@@ -1,6 +1,6 @@
 # Branch Decomposition-Independent Edit Distances for Merge Trees
 
-This repository contains a python library for computing branch decomposition-independent edit distances for merge trees as well as code examples and datasets to explain basic usage.
+This repository contains a python library and a C++ library for computing branch decomposition-independent edit distances for merge trees as well as code examples and datasets to explain basic usage.
 
 ## Using the library
 
@@ -46,7 +46,7 @@ The examples work as follows:
 
 The four datasets corresponding to the python examples can be found in the directories `heatedCylinder2d.cdb`, `test_datasets/branchVSconstrained_cluster`, `test_datasets/branchVSconstrained_outlier` and `test_datasets/branchVSconstrained_outlier2`. We also provide two noisy versions of the outlier ensemble: one in `test_datasets/branchVSconstrained_outlier2` and `test_datasets/branchVSconstrained_outlier_noisy`. All datasets are provided in VTK file formats. The two noisy datasets have no corresponding python examples, as computation times would be too high. The should only be used with the C++ version of the library (see below for details).
 
-We also provide a more efficient C++ implementation of the two distance functions in the `cpp/` directory. The interface is similar to the python version. The C++ implementation does not yet output the matching, but only the distance, and does not allow for a base metric change. The Wasserstein base metric has been hardcoded for both distances. The C++ code uses the following library for maximum matching: https://github.com/aaron-michaux/munkres-algorithm (see Copyright notice in `cpp/munkres.hpp`).
+We also provide a more efficient C++ implementation of the two distance functions in the `cpp/` directory. The interface is similar to the python version. The C++ implementation does not yet output the matching, but only the distance, and does not allow for a base metric change. The Wasserstein base metric has been hardcoded for both distances. The C++ code uses the following library for maximum matching: https://github.com/aaron-michaux/munkres-algorithm (see Copyright notice in `cpp/munkres.hpp`). Furthermore, the C++ code also contains an implementation of the path mapping distance additionally to the branch mapping distance.
 
 ## Dependencies
 
