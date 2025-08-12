@@ -59,6 +59,7 @@ For the constrained edit distance and the branch mapping distance, several base 
 Usage is illustrated in the following examples:
 
 ```
+import networkx as nx
 from mted.baseMetrics import *
 from mted.branch_mapping_dist import *
 
@@ -78,6 +79,7 @@ Here, `tree1` and `tree2` are the merge trees as networkx graphs with scalar val
 The constrained merge tree edit distance can be used in exactly the same way:
 
 ```
+import networkx as nx
 from mted.baseMetrics import *
 from mted.constrained_edist_mt import *
 
@@ -95,6 +97,7 @@ dist,match = editDistance_constrained(tree1_rooted,root1,tree2_rooted,root2,cost
 For the path mapping distance, usage is very similar, with some minor adaptations. The `sqrt` flag is not available, and the base metric is fixed as well:
 
 ```
+import networkx as nx
 from mted.baseMetrics import *
 from mted.path_mapping_dist import *
 
@@ -112,6 +115,7 @@ dist,match = pathMappingDistance(tree1,root1,tree1,root2,traceback=True)
 For the deformation-based edit distance, the input trees are given as the original unrooted graphs, and no `traceback` flag is available. Otherwise, the interface is the same: 
 
 ```
+import networkx as nx
 from mted.baseMetrics import *
 from mted.deform_edist import *
 
