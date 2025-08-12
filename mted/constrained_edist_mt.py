@@ -1,12 +1,24 @@
-import numpy as np
 import math
+import numpy as np
 from scipy.optimize import linear_sum_assignment
 
-from contourMergeTrees_helpers import *
-            
-def editDistance_constrained(nodes1,topo1,rootID1,nodes2,topo2,rootID2,editCost,traceback=False):
+def editDistance_constrained(tree1,rootID1,tree2,rootID2,editCost,sqrt=False,traceback=False):
     memT = dict()
     memF = dict()
+
+    nodes1 = []
+    for i in range(len(list(tree1.nodes))):
+        nodes1.append((tree1.nodes(data=True)[i]["birth"],tree1.nodes(data=True)[i]["death"]))
+    topo1 = []
+    for i in range(len(list(tree1.nodes))):
+        topo1.append(list(tree1.neighbors(i)))
+
+    nodes2 = []
+    for i in range(len(list(tree2.nodes))):
+        nodes2.append((tree2.nodes(data=True)[i]["birth"],tree2.nodes(data=True)[i]["death"]))
+    topo2 = []
+    for i in range(len(list(tree2.nodes))):
+        topo2.append(list(tree2.neighbors(i)))
     
     #===================================================================
     # Recursive helper function that computes edit distance between two subtrees rooted in curr1,curr2
@@ -18,21 +30,21 @@ def editDistance_constrained(nodes1,topo1,rootID1,nodes2,topo2,rootID2,editCost,
         if(curr1<0):
             if((curr1,curr2) not in memT):
                 d = (editDistance_constrained_forest(curr1,curr2)
-                     + editCost(None,nodes2[curr2]))
+                     + editCost(None,None,nodes2[curr2][0], nodes2[curr2][1]))
                 memT[(curr1,curr2)] = d
             return memT[(curr1,curr2)]
         # If second tree empty, return deletion cost of curr1 plus deletion cost of its subforest
         if(curr2<0):
             if((curr1,curr2) not in memT):
                 d = (editDistance_constrained_forest(curr1,curr2)
-                     + editCost(nodes1[curr1],None))
+                     + editCost(nodes1[curr1][0],nodes1[curr1][1],None,None))
                 memT[(curr1,curr2)] = d
             return memT[(curr1,curr2)]
         # If both trees not empty, find optimal edit operation
         if((curr1,curr2) not in memT):
             # Case for matching curr1 to curr2 and recurse to subforests
             d = (editDistance_constrained_forest(curr1,curr2)
-                 + editCost(nodes1[curr1],nodes2[curr2]))
+                 + editCost(nodes1[curr1][0],nodes1[curr1][1],nodes2[curr2][0], nodes2[curr2][1]))
             # Cases for deleting curr1 and mapping one child to curr2
             for child1 in topo1[curr1]:
                 d_ = (editDistance_constrained_tree(curr1,-1)
@@ -79,7 +91,7 @@ def editDistance_constrained(nodes1,topo1,rootID1,nodes2,topo2,rootID2,editCost,
             d = float("inf")
             # Cases for mapping some trees in first forest to some trees in second forest and deleting all other trees in both forests
             # Special case of binary trees is treated differently for performance
-            if(False):#len(topo1[curr1])<=2 and len(topo2[curr2])<=2):
+            if(len(topo1[curr1])<=2 and len(topo2[curr2])<=2):
                 n11 = topo1[curr1][0]
                 n12 = topo1[curr1][1] if len(topo1[curr1]) > 1 else -1
                 n21 = topo2[curr2][0]
@@ -130,7 +142,7 @@ def editDistance_constrained(nodes1,topo1,rootID1,nodes2,topo2,rootID2,editCost,
             match.append((curr1,-1))
             return match
         d = (editDistance_constrained_forest(curr1,curr2)
-             + editCost(nodes1[curr1],nodes2[curr2]))
+             + editCost(nodes1[curr1][0],nodes1[curr1][1],nodes2[curr2][0],nodes2[curr2][1]))
         if(memT[(curr1,curr2)]==d):
             match = editDistance_constrained_forest_traceback(curr1,curr2)
             match.append((curr1,curr2))
@@ -235,6 +247,12 @@ def editDistance_constrained(nodes1,topo1,rootID1,nodes2,topo2,rootID2,editCost,
     #===================================================================
     # if traceback flag set, return distance and mapping, otherwise only distance
     if(traceback):
-        return editDistance_constrained_tree(rootID1,rootID2),editDistance_constrained_tree_traceback(rootID1,rootID2)
+        if sqrt:
+            return math.sqrt(editDistance_constrained_tree(rootID1,rootID2)), editDistance_constrained_tree_traceback(rootID1,rootID2)
+        else:
+            return editDistance_constrained_tree(rootID1,rootID2),editDistance_constrained_tree_traceback(rootID1,rootID2)
     else:
-        return editDistance_constrained_tree(rootID1,rootID2)
+        if sqrt:
+            return math.sqrt(editDistance_constrained_tree(rootID1,rootID2))
+        else:
+            return editDistance_constrained_tree(rootID1,rootID2)

@@ -1,13 +1,25 @@
-import numpy as np
 import math
+import numpy as np
 from scipy.optimize import linear_sum_assignment
-
-from contourMergeTrees_helpers import *
         
-def branchMappingDistance(nodes1,topo1,rootID1,nodes2,topo2,rootID2,editCost,traceback=False):
+def branchMappingDistance(tree1,rootID1,tree2,rootID2,editCost,sqrt=False,traceback=False):
     memT = dict()
-    
-    #===================================================================
+
+    nodes1 = []
+    for i in range(len(list(tree1.nodes))):
+        nodes1.append(tree1.nodes(data=True)[i]["scalar"])
+    topo1 = []
+    for i in range(len(list(tree1.nodes))):
+        topo1.append(list(tree1.neighbors(i)))
+
+    nodes2 = []
+    for i in range(len(list(tree2.nodes))):
+        nodes2.append(tree2.nodes(data=True)[i]["scalar"])
+    topo2 = []
+    for i in range(len(list(tree2.nodes))):
+        topo2.append(list(tree2.neighbors(i)))
+
+    #===================================================================================
     # Recursive helper function that computes edit distance between two subtrees rooted in (parent1,curr1),(parent2,curr2)
     def editDistance_branch(curr1,parent1,curr2,parent2):
         #===============================================================================
@@ -146,7 +158,7 @@ def branchMappingDistance(nodes1,topo1,rootID1,nodes2,topo2,rootID2,editCost,tra
                 memT[(curr1,parent1,curr2,parent2)] = d
         return memT[(curr1,parent1,curr2,parent2)]
 
-    #===================================================================
+    #===================================================================================
     # Recursive helper function that computes the optimal edit mapping between two subtrees rooted in (parent1,curr1),(parent2,curr2) given the memoization table from distance computation
     def editDistance_branch_traceback(curr1,parent1,curr2,parent2):
         #===============================================================================
@@ -303,9 +315,15 @@ def branchMappingDistance(nodes1,topo1,rootID1,nodes2,topo2,rootID2,editCost,tra
                         match_ += editDistance_branch_traceback(-1,-1,child2,curr2)
                     return match_
     
-    #===================================================================
+    #===============================================================================
     # if traceback flag set, return distance and mapping, otherwise only distance
     if(traceback):
-        return editDistance_branch(topo1[rootID1][0],rootID1,topo2[rootID2][0],rootID2),editDistance_branch_traceback(topo1[rootID1][0],rootID1,topo2[rootID2][0],rootID2)
+        if sqrt:
+            return math.sqrt(editDistance_branch(topo1[rootID1][0],rootID1,topo2[rootID2][0],rootID2)), editDistance_branch_traceback(topo1[rootID1][0],rootID1,topo2[rootID2][0],rootID2)
+        else:
+            return editDistance_branch(topo1[rootID1][0],rootID1,topo2[rootID2][0],rootID2), editDistance_branch_traceback(topo1[rootID1][0],rootID1,topo2[rootID2][0],rootID2)
     else:
-        return editDistance_branch(topo1[rootID1][0],rootID1,topo2[rootID2][0],rootID2)
+        if sqrt:
+            return math.sqrt(editDistance_branch(topo1[rootID1][0],rootID1,topo2[rootID2][0],rootID2))
+        else:
+            return editDistance_branch(topo1[rootID1][0],rootID1,topo2[rootID2][0],rootID2)
