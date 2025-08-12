@@ -4,19 +4,19 @@
 
 This repository provides a Python library implementing the methods described in the following research papers:
 
-"Branch Decomposition-Independent Edit Distances for Merge Trees." 
-Florian Wetzels, Heike Leitte, and Christoph Garth.
-Computer Graphics Forum, 2022.
+"Branch Decomposition-Independent Edit Distances for Merge Trees."  
+Florian Wetzels, Heike Leitte, and Christoph Garth.  
+Computer Graphics Forum, 2022.  
 DOI: [10.1111/cgf.14547](https://doi.org/https://doi.org/10.1111/cgf.14547)
 
-"A Deformation-Based Edit Distance for Merge Trees"
-Florian Wetzels, Christoph Garth.
-TopoInVis 2022.
+"A Deformation-Based Edit Distance for Merge Trees"  
+Florian Wetzels, Christoph Garth.  
+TopoInVis 2022.  
 DOI: [10.1109/TopoInVis57755.2022.00010](https://doi.org/10.1109/TopoInVis57755.2022.00010)
 
 "Taming Horizontal Instability in Merge Trees: On the Computation of a Comprehensive Deformation-Based Edit Distance"
-Florian Wetzels, Christoph Garth.
-TopoInVis 2022.
+Florian Wetzels, Markus Anders, Christoph Garth.  
+TopoInVis 2022.  
 DOI: [0.1109/TopoInVis60193.2023.00015](https://doi.org/10.1109/TopoInVis60193.2023.00015)
 
 #### Contents
@@ -32,19 +32,19 @@ These have been moved to separate data publications, but can also be found in th
 The datasets are published here:
 
 #### Datasets
-"Vertical Instability Example — Four Clusters"
-Florian Wetzels, Heike Leitte, Christoph Garth.
-Zenodo, 2025.
+"Vertical Instability Example — Four Clusters"  
+Florian Wetzels, Heike Leitte, Christoph Garth.  
+Zenodo, 2025.  
 DOI: [10.5281/zenodo.16756130](https://doi.org/10.5281/zenodo.16756130)
 
-"Vertical Instability Example — Outlier"
-Florian Wetzels, Heike Leitte, Christoph Garth.
-Zenodo, 2025.
+"Vertical Instability Example — Outlier"  
+Florian Wetzels, Heike Leitte, Christoph Garth.  
+Zenodo, 2025.  
 DOI: [10.5281/zenodo.16755706](https://doi.org/10.5281/zenodo.16755706)
 
-"Horizontal Instability Example"
-Florian Wetzels, Markus Anders, Christoph Garth.
-Zenodo, 2025.
+"Horizontal Instability Example"  
+Florian Wetzels, Markus Anders, Christoph Garth.  
+Zenodo, 2025.  
 DOI: [10.5281/zenodo.16758783](https://doi.org/10.5281/zenodo.16758783)
 
 ## Using the library
