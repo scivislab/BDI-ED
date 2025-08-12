@@ -1,6 +1,0 @@
-<?xml version="1.0"?>
-<VTKFile type="vtkMultiBlockDataSet" version="1.0" byte_order="LittleEndian" header_type="UInt32" compressor="vtkZLibDataCompressor">
-  <vtkMultiBlockDataSet>
-    <DataSet index="999999" file="test_MB_noise/test_MB_noise_999999.vti"/>
-  </vtkMultiBlockDataSet>
-</VTKFile>
