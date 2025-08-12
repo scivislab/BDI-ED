@@ -26,7 +26,7 @@ A more efficient C++ implementation of the path and branch mapping distance is a
 
 #### Original Source Code
 For an archive of the original source code submitted with the first two papers on the branch and path mapping distance, see the [corresponding branch]().
-This branch also contains an alternative C++ implementation, on which the benchmarks in the papers are bases.
+This branch also contains an alternative C++ implementation, on which the benchmarks in the papers are based.
 Furthermore, the original repositories contained datasets to showcase the distances.
 These have been moved to separate data publications, but can also be found in the branch mentioned above.
 The datasets are published here:
@@ -132,14 +132,19 @@ Here, `path` is the path to a `.vti` file, `simplificationThreshold` it the rela
 
 ## Running the examples
 
-The three example files contain code for replicating results from the papers.
-In particular, distance matrices on three different synthetic benchmark datasets are computed to showcase the stability of the distances. The first two scripts reproduce results from the papers on the path mapping and branch mapping distance, only using the distances considered there. The last example reproduces results from the paper on the unconstrained deformation-based edit distance, including the MIP implementation of this distance. For this last example, the computation is parallelized (8 threads), due to the high computational load of the MIP implementation. The first two examples work sequentially on one thread. The examples work as follows:
+Three example scripts are provided in the `examples/` directory. They contain code for replicating results from the papers.
+In particular, distance matrices on three different synthetic benchmark datasets are computed to showcase the stability of the distances. The first two scripts reproduce results from the papers on the path mapping and branch mapping distance, only using the distances considered there. The last example reproduces results from the paper on the unconstrained deformation-based edit distance, including the MIP implementation of this distance. For this last example, the computation is parallelized (8 threads), due to the high computational load of the MIP implementation. The first two examples work sequentially on one thread.
 
-- By running `python3 distanceMatrixComparison_cluster.py`, we get three distance matrices on the dataset "Vertical Instability Example — Four Clusters": one is computed with the path mapping distance, one with the branch mapping distance, and one with the constrained edit distance. They are rendered as a clustermap using SciPy and seaborn. The results are stored in `clustermap_<distance>_cluster.svg`.
+The dataset for the examples can be retrieved from the data publications referenced above or corresponding git repositories.
+In `scripts/get_data.sh`, a bash script retrieving the datasets through git is provided.
 
-- By running `python3 distanceMatrixComparison_outlier.py`, we get three distance matrices on the dataset "Vertical Instability Example — Outlier": one is computed with the path mapping distance, one with the branch mapping distance, and one with the constrained edit distance. They are rendered as a clustermap using SciPy and seaborn. The results are stored in `clustermap_<distance>_outlier.svg`.
+Based on these datasets, the example scripts work as follows:
 
-- By running `python3 distanceMatrixComparison_horizontal.py`, we get four distance matrices on the dataset "Horizontal Instability Example": one is computed with the path mapping distance, one with the branch mapping distance, one with the constrained edit distance, and one with the unconstrained deformation-based edit distance. They are rendered as a clustermap using SciPy and seaborn. The results are stored in `clustermap_<distance>_hs.svg`.
+- By running `python3 examples/distanceMatrixComparison_cluster.py`, we get three distance matrices on the dataset "Vertical Instability Example — Four Clusters": one is computed with the path mapping distance, one with the branch mapping distance, and one with the constrained edit distance. They are rendered as a clustermap using SciPy and seaborn. The results are stored in `clustermap_<distance>_cluster.svg`.
+
+- By running `python3 examples/distanceMatrixComparison_outlier.py`, we get three distance matrices on the dataset "Vertical Instability Example — Outlier": one is computed with the path mapping distance, one with the branch mapping distance, and one with the constrained edit distance. They are rendered as a clustermap using SciPy and seaborn. The results are stored in `clustermap_<distance>_outlier.svg`.
+
+- By running `python3 examples/distanceMatrixComparison_horizontal.py`, we get four distance matrices on the dataset "Horizontal Instability Example": one is computed with the path mapping distance, one with the branch mapping distance, one with the constrained edit distance, and one with the unconstrained deformation-based edit distance. They are rendered as a clustermap using SciPy and seaborn. The results are stored in `clustermap_<distance>_hs.svg`.
 
 ## Dependencies
 
@@ -173,4 +178,6 @@ conda install seaborn
 conda install -c conda-forge topologytoolkit
 conda install networkx
 conda install -c gurobi gurobi
+connda install scipy
+conda install conda-forge::pulp
 ```
