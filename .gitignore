@@ -1,0 +1,2 @@
+*.svg # ignore result files/images
+*.cdb # ignore datasets/cinema data bases
