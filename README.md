@@ -136,7 +136,7 @@ Here, `path` is the path to a `.vti` file, `simplificationThreshold` it the rela
 
 ## Running the examples
 
-Three example scripts are provided in the `examples/` directory. They contain code for replicating results from the papers.
+Three example scripts are provided in the root directory. They contain code for replicating results from the papers.
 In particular, distance matrices on three different synthetic benchmark datasets are computed to showcase the stability of the distances. The first two scripts reproduce results from the papers on the path mapping and branch mapping distance, only using the distances considered there. The last example reproduces results from the paper on the unconstrained deformation-based edit distance, including the MIP implementation of this distance. For this last example, the computation is parallelized (8 threads), due to the high computational load of the MIP implementation. The first two examples work sequentially on one thread.
 
 The dataset for the examples can be retrieved from the data publications referenced above or corresponding git repositories.
@@ -144,11 +144,11 @@ In `scripts/get_data.sh`, a bash script retrieving the datasets through git is p
 
 Based on these datasets, the example scripts work as follows:
 
-- By running `python3 examples/distanceMatrixComparison_cluster.py`, we get three distance matrices on the dataset "Vertical Instability Example — Four Clusters": one is computed with the path mapping distance, one with the branch mapping distance, and one with the constrained edit distance. They are rendered as a clustermap using SciPy and seaborn. The results are stored in `clustermap_<distance>_cluster.svg`.
+- By running `python3 distanceMatrixComparison_cluster.py`, we get three distance matrices on the dataset "Vertical Instability Example — Four Clusters": one is computed with the path mapping distance, one with the branch mapping distance, and one with the constrained edit distance. They are rendered as a clustermap using SciPy and seaborn. The results are stored in `clustermap_<distance>_cluster.svg`.
 
-- By running `python3 examples/distanceMatrixComparison_outlier.py`, we get three distance matrices on the dataset "Vertical Instability Example — Outlier": one is computed with the path mapping distance, one with the branch mapping distance, and one with the constrained edit distance. They are rendered as a clustermap using SciPy and seaborn. The results are stored in `clustermap_<distance>_outlier.svg`.
+- By running `python3 distanceMatrixComparison_outlier.py`, we get three distance matrices on the dataset "Vertical Instability Example — Outlier": one is computed with the path mapping distance, one with the branch mapping distance, and one with the constrained edit distance. They are rendered as a clustermap using SciPy and seaborn. The results are stored in `clustermap_<distance>_outlier.svg`.
 
-- By running `python3 examples/distanceMatrixComparison_horizontal.py`, we get four distance matrices on the dataset "Horizontal Instability Example": one is computed with the path mapping distance, one with the branch mapping distance, one with the constrained edit distance, and one with the unconstrained deformation-based edit distance. They are rendered as a clustermap using SciPy and seaborn. The results are stored in `clustermap_<distance>_hs.svg`.
+- By running `python3 distanceMatrixComparison_horizontal.py`, we get four distance matrices on the dataset "Horizontal Instability Example": one is computed with the path mapping distance, one with the branch mapping distance, one with the constrained edit distance, and one with the unconstrained deformation-based edit distance. They are rendered as a clustermap using SciPy and seaborn. The results are stored in `clustermap_<distance>_hs.svg`.
 
 ## Dependencies
 

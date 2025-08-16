@@ -7,7 +7,6 @@ from mted.baseMetrics import *
 from mted.path_mapping_dist import *
 from mted.branch_mapping_dist import *
 from mted.constrained_edist_mt import *
-from mted.deform_edist import *
 from mergetree.mergetree import *
 
 # compute merge trees for each scalar field
@@ -36,7 +35,6 @@ for i in range(0,20):
 distanceMatrix_branch = np.zeros((20,20))
 distanceMatrix_path = np.zeros((20,20))
 distanceMatrix_constrained = np.zeros((20,20))
-distanceMatrix_deform = np.zeros((20,20))
 
 # compute distances between all pairs of merge trees
 
@@ -84,10 +82,6 @@ linkage = hc.linkage(sp.distance.squareform(distanceMatrix_constrained), method=
 cm = sns.clustermap(distanceMatrix_constrained, row_linkage=linkage, col_linkage=linkage, cmap='inferno_r')
 reorder_constrained = cm.dendrogram_row.reordered_ind
 
-linkage = hc.linkage(sp.distance.squareform(distanceMatrix_deform), method='average')
-cm = sns.clustermap(distanceMatrix_deform, row_linkage=linkage, col_linkage=linkage, cmap='inferno_r')
-reorder_deform = cm.dendrogram_row.reordered_ind
-
 # save clustermaps as SVG files
 
 fig, ax = plt.subplots()
@@ -107,11 +101,5 @@ pos = ax.imshow(distanceMatrix_constrained[:, reorder_constrained][reorder_const
 plt.axis('off')
 plt.colorbar(pos,ax=[ax],location='left',shrink=0.85)
 fig.savefig("./clustermap_constrained_cluster.svg",transparent=True,bbox_inches='tight',pad_inches=0)
-
-fig, ax = plt.subplots()
-pos = ax.imshow(distanceMatrix_deform[:, reorder_deform][reorder_deform], cmap='inferno_r', interpolation='nearest')
-plt.axis('off')
-plt.colorbar(pos,ax=[ax],location='left',shrink=0.85)
-fig.savefig("./clustermap_deform_cluster.svg",transparent=True,bbox_inches='tight',pad_inches=0)
 
 exit()
