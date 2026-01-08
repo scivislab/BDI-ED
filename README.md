@@ -21,11 +21,11 @@ DOI: [0.1109/TopoInVis60193.2023.00015](https://doi.org/10.1109/TopoInVis60193.2
 
 #### Contents
 The repository includes the library itself, as well as example scripts demonstrating how to use the library and replicate results from the papers.
-For comparison with a method from the literature, the constrained edit distance for merge trees (see https://doi.org/10.1007/BF01975866) is also provided.
-A more efficient C++ implementation of the path and branch mapping distance is available in a separate [repository]() or in the [TTK library]().
+For comparison with a method from the literature, the constrained edit distance for merge trees (see the [corresponding research paper](https://doi.org/10.1109/TVCG.2018.2873612)) is also provided.
+A more efficient C++ implementation of the path and branch mapping distance is available in a separate [repository](https://github.com/scivislab/ttk-BDIED) or in the [TTK library](https://github.com/topology-tool-kit/ttk).
 
 #### Original Source Code
-For an archive of the original source code submitted with the first two papers on the branch and path mapping distance, see the [corresponding branch]().
+For an archive of the original source code submitted with the first two papers on the branch and path mapping distance, see the [corresponding branch](https://github.com/scivislab/BDI-ED/tree/eurovis-topoinvis).
 This branch also contains an alternative C++ implementation, on which the benchmarks in the papers are based.
 Furthermore, the original repositories contained datasets to showcase the distances.
 These have been moved to separate data publications, but can also be found in the branch mentioned above.
@@ -50,7 +50,7 @@ DOI: [10.5281/zenodo.16758783](https://doi.org/10.5281/zenodo.16758783)
 ## Using the library
 
 This library contains python implementations for four different tree edit distances:
-- the classic constrained edit distance (details [here](https://doi.org/10.1007/BF01975866)) in `mted/constrained_edist_mt.py`;
+- the classic constrained edit distance (details [here](https://doi.org/10.1109/TVCG.2018.2873612)) in `mted/constrained_edist_mt.py`;
 - the branch mapping distance (details [here](https://doi.org/https://doi.org/10.1111/cgf.14547)) in `mted/branch_mapping_dist.py`;
 - the path mapping distance (details [here](https://doi.org/10.1109/TopoInVis57755.2022.00010)) in `mted/path_mapping_dist.py`;
 - the deformation-based edit distance (details [here](https://doi.org/10.1109/TopoInVis60193.2023.00015)) in `mted/deform_edist`.
