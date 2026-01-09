@@ -176,47 +176,26 @@ def pathMappingDistance(tree1,rootID1,tree2,rootID2,traceback=False):
             if(len(topo2[curr2])==0):
                 return [((-1,-1),(curr2,parent2))]
             else:
-                c = memT[(curr1,parent1,curr2,parent2)]
-                for child2_mb in topo2[curr2]:
-                    c_ = editDistance_path(curr1,parent1,child2_mb,parent2)
-                    for child2 in topo2[curr2]:
-                        if(child2==child2_mb):
-                            continue
-                        c_ += editDistance_path(curr1,parent1,child2,curr2)
-                    if(c==c_):
-                        match = editDistance_path_traceback(curr1,parent1,child2_mb,parent2)
-                        for child2 in topo2[curr2]:
-                            if(child2==child2_mb):
-                                continue
-                            match += editDistance_path_traceback(curr1,parent1,child2,curr2)
-                        return match
+                match = [((-1,-1),(curr2,parent2))]
+                for child2 in topo2[curr2]:
+                    match += editDistance_path_traceback(curr1,parent1,child2,curr2)
+                return match
         #===============================================================================
         # base case (second tree null)
         if(curr2<0):
             if(len(topo1[curr1])==0):
                 return [((curr1,parent1),(-1,-1))]
             else:
-                c = memT[(curr1,parent1,curr2,parent2)]
-                for child1_mb in topo1[curr1]:
-                    c_ = editDistance_path(child1_mb,parent1,curr2,parent2)
-                    for child1 in topo1[curr1]:
-                        if(child1==child1_mb):
-                            continue
-                        c_ += editDistance_path(child1,curr1,curr2,parent2)
-                    if(c==c_):
-                        match = editDistance_path_traceback(child1_mb,parent1,curr2,parent2)
-                        for child1 in topo1[curr1]:
-                            if(child1==child1_mb):
-                                continue
-                            match += editDistance_path_traceback(child1,curr1,curr2,parent2)
-                        return match
+                match = [((curr1,parent1),(-1,-1))]
+                for child1 in topo1[curr1]:
+                    match += editDistance_path_traceback(child1,curr1,curr2,parent2)
+                return match
         #===============================================================================
         # both trees not null
         
         #------------------------------------------------
         # both trees leaves
         if(len(topo1[curr1])==0 and len(topo2[curr2])==0):
-            #print((curr1,parent1)," ",(curr2,parent2))
             return [((curr1,parent1),(curr2,parent2))]
         #------------------------------------------------
         # first tree leave
@@ -261,38 +240,29 @@ def pathMappingDistance(tree1,rootID1,tree2,rootID2,traceback=False):
                 child12 = topo1[curr1][1]
                 child21 = topo2[curr2][0]
                 child22 = topo2[curr2][1]
-                if(d == editDistance_path(child11,parent1,child21,parent2) + editDistance_path(child12,curr1,child22,curr2)):
-                    return editDistance_path_traceback(child11,parent1,child21,parent2) + editDistance_path_traceback(child12,curr1,child22,curr2)
-                if(d == editDistance_path(child12,parent1,child22,parent2) + editDistance_path(child11,curr1,child21,curr2)):
-                    return editDistance_path_traceback(child12,parent1,child22,parent2) + editDistance_path_traceback(child11,curr1,child21,curr2)
-                if(d == editDistance_path(child11,parent1,child22,parent2) + editDistance_path(child12,curr1,child21,curr2)):
-                    return editDistance_path_traceback(child11,parent1,child22,parent2) + editDistance_path_traceback(child12,curr1,child21,curr2)
-                if(d == editDistance_path(child12,parent1,child21,parent2) + editDistance_path(child11,curr1,child22,curr2)):
-                    return editDistance_path_traceback(child12,parent1,child21,parent2) + editDistance_path_traceback(child11,curr1,child22,curr2)
+                mc = editCost(nodes1[curr1],nodes1[parent1],nodes2[curr2],nodes2[parent2])
+                if(d == mc + editDistance_path(child11,curr1,child21,curr2) + editDistance_path(child12,curr1,child22,curr2)):
+                    return [((curr1,parent1),(curr2,parent2))] + editDistance_path_traceback(child11,curr1,child21,curr2) + editDistance_path_traceback(child12,curr1,child22,curr2)
+                if(d == mc + editDistance_path(child11,curr1,child22,curr2) + editDistance_path(child12,curr1,child21,curr2)):
+                    return [((curr1,parent1),(curr2,parent2))] + editDistance_path_traceback(child11,curr1,child22,curr2) + editDistance_path_traceback(child12,curr1,child21,curr2)
             else:
-                for child1_mb in topo1[curr1]:
-                    topo1_ = topo1[curr1].copy()
-                    topo1_.remove(child1_mb)
-                    for child2_mb in topo2[curr2]:
-                        d_ = editDistance_path(child1_mb,parent1,child2_mb,parent2)
-                        topo2_ = topo2[curr2].copy()
-                        topo2_.remove(child2_mb)                            
-                        deg = max(len(topo1_),len(topo2_))
-                        matchMatrix = np.zeros((deg,deg))
-                        for i in range(deg):
-                            child1 = topo1_[i] if i<len(topo1_) else -1
-                            for j in range(deg):
-                                child2 = topo2_[j] if j<len(topo2_) else -1
-                                matchMatrix[i,j] = editDistance_path(child1,curr1,child2,curr2)
-                        row_ind, col_ind = linear_sum_assignment(matchMatrix)
-                        d_ += matchMatrix[row_ind, col_ind].sum()
-                        if(d == d_):
-                            match = editDistance_path_traceback(child1_mb,parent1,child2_mb,parent2)
-                            for i in range(len(row_ind)):
-                                child1 = topo1_[row_ind[i]] if row_ind[i]<len(topo1_) else -1
-                                child2 = topo2_[col_ind[i]] if col_ind[i]<len(topo2_) else -1
-                                match += editDistance_path_traceback(child1,curr1,child2,curr2)
-                            return match
+                d_ = editCost(nodes1[curr1],nodes1[parent1],nodes2[curr2],nodes2[parent2])                          
+                deg = max(len(topo1),len(topo2))
+                matchMatrix = np.zeros((deg,deg))
+                for i in range(deg):
+                    child1 = topo1[curr1][i] if i<len(topo1[curr1]) else -1
+                    for j in range(deg):
+                        child2 = topo2[curr2][j] if j<len(topo2[curr2]) else -1
+                        matchMatrix[i,j] = editDistance_path(child1,curr1,child2,curr2)
+                row_ind, col_ind = linear_sum_assignment(matchMatrix)
+                d_ += matchMatrix[row_ind, col_ind].sum()
+                if(d == d_):
+                    match = [((curr1,parent1),(curr2,parent2))]
+                    for i in range(len(row_ind)):
+                        child1 = topo1[curr1][row_ind[i]] if row_ind[i]<len(topo1[curr1]) else -1
+                        child2 = topo2[curr2][col_ind[i]] if col_ind[i]<len(topo2[curr2]) else -1
+                        match += editDistance_path_traceback(child1,curr1,child2,curr2)
+                    return match
             for child1_mb in topo1[curr1]:
                 d_ = editDistance_path(child1_mb,parent1,curr2,parent2)
                 for child1 in topo1[curr1]:

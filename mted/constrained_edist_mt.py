@@ -189,7 +189,7 @@ def editDistance_constrained(tree1,rootID1,tree2,rootID2,editCost,sqrt=False,tra
             return editDistance_constrained_forest_traceback(-1,curr2)
         if(len(topo2[curr2])==0):
             return editDistance_constrained_forest_traceback(curr1,-1)
-        if(False):#)len(topo1[curr1])<=2 and len(topo2[curr2])<=2):
+        if(len(topo1[curr1])<=2 and len(topo2[curr2])<=2):
             n11 = topo1[curr1][0]
             n12 = topo1[curr1][1] if len(topo1[curr1]) > 1 else -1
             n21 = topo2[curr2][0]
