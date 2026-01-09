@@ -170,18 +170,18 @@ apt install python3-sklearn
 apt install wget
 
 # install conda
-wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
-bash Miniconda3-latest-Linux-x86_64.sh
+wget https://repo.anaconda.com/miniconda/Miniconda3-py310_25.9.1-1-Linux-x86_64.sh
+bash Miniconda3-py310_25.9.1-1-Linux-x86_64.sh
 source ~/.bashrc
 
 # install conda packages
 conda create --name bdied
 conda activate bdied
-conda install conda-forge:vtk
-conda install seaborn
-conda install -c conda-forge topologytoolkit
-conda install networkx
-conda install -c gurobi gurobi
-connda install scipy
-conda install conda-forge::pulp
+conda install conda-forge::vtk==9.4.2
+conda install seaborn==0.13.2
+conda install -c conda-forge topologytoolkit==1.3.0
+conda install anaconda::networkx==3.4.2
+conda install gurobi::gurobi==12.0.3
+conda install anaconda::scipy==1.16.0
+conda install conda-forge::pulp==3.2.2
 ```
