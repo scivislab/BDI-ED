@@ -166,7 +166,6 @@ From a vanilla Ubuntu 22.04, the following commands install all the dependencies
 
 ```
 # install apt packages
-apt install python3-sklearn
 apt install wget
 
 # install conda
@@ -183,5 +182,5 @@ conda install -c conda-forge topologytoolkit==1.3.0
 conda install anaconda::networkx==3.4.2
 conda install gurobi::gurobi==12.0.3
 conda install anaconda::scipy==1.16.0
-conda install conda-forge::pulp==3.2.2
+conda install conda-forge::pulp==2.8.0
 ```
