@@ -53,7 +53,7 @@ This library contains python implementations for four different tree edit distan
 - the classic constrained edit distance (details [here](https://doi.org/10.1109/TVCG.2018.2873612)) in `mted/constrained_edist_mt.py`;
 - the branch mapping distance (details [here](https://doi.org/https://doi.org/10.1111/cgf.14547)) in `mted/branch_mapping_dist.py`;
 - the path mapping distance (details [here](https://doi.org/10.1109/TopoInVis57755.2022.00010)) in `mted/path_mapping_dist.py`;
-- the deformation-based edit distance (details [here](https://doi.org/10.1109/TopoInVis60193.2023.00015)) in `mted/deform_edist`.
+- the deformation-based edit distance (details [here](https://doi.org/10.1109/TopoInVis60193.2023.00015)) in `mted/deform_edist.py`.
 
 For the constrained edit distance and the branch mapping distance, several base metrics to compare two branches are provided in `mted/baseMetrics.py`.
 Usage is illustrated in the following examples:
